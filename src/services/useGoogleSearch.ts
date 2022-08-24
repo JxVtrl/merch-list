@@ -1,4 +1,4 @@
-export const getSearch = async (text: string) => {
+export const useGoogleSearch = async (text: string) => {
     const key = import.meta.env.VITE_GOOGLE_KEY
     const cx = import.meta.env.VITE_SEARCH_ENGINE
 

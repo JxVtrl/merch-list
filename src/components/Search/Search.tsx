@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Flex, Input } from '@chakra-ui/react';
-import { getSearch } from '../../services';
+import { useGoogleSearch } from '../../services';
 import { useApp } from '../../context';
 
 export const Search: React.FC = () => {
@@ -10,7 +10,7 @@ export const Search: React.FC = () => {
     const handleSearch = async () => {
         if (search) {
             setOpenModal(true)
-            setImageSelection(await getSearch(search))
+            setImageSelection(await useGoogleSearch(search))
         }
     }
 

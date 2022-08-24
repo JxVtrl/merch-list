@@ -5,7 +5,6 @@ import { useApp } from '../../context';
 export const SelectItem: React.FC = () => {
     const { openModal, setOpenModal, imageSelection }: any = useApp()
     const [modalPage, setModalPage] = useState<number>(0)
-    console.log(imageSelection)
 
     useEffect(() => {
         if (openModal)
