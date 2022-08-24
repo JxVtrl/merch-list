@@ -1,6 +1,6 @@
 import React from 'react';
 import { Flex } from '@chakra-ui/react';
-import { Search, SelectImage } from '../../components';
+import { Search, SelectItem } from '../../components';
 import { useApp } from '../../context';
 
 export const Home: React.FC = () => {
@@ -8,7 +8,7 @@ export const Home: React.FC = () => {
     <Flex pos='relative' flexDir='column'>
       <Search />
 
-      <SelectImage />
+      <SelectItem />
     </Flex>
   );
 }
