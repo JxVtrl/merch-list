@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Image } from '@chakra-ui/react';
-import { useApp } from '../../context';
+import { Button, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Image, FormControl, FormLabel, Input, InputGroup, InputLeftElement } from '@chakra-ui/react';
+import { useApp, useFirebase } from '../../context';
+import { formatCurrency } from '../../helpers';
 
 export const SelectItem: React.FC = () => {
     const { openModal, setOpenModal, imageSelection }: any = useApp()
+    const { setSelectedOptions, selectedOptions, createItem }: any = useFirebase()
     const [modalPage, setModalPage] = useState<number>(0)
 
     useEffect(() => {
-        if (openModal)
+        if (openModal){
             setModalPage(0)
+            setSelectedOptions({})
+        }
     },[openModal])
 
-    const handleCreateItem = () => {
-        setOpenModal(false)
+
+    const handlePhotoSelect = (e: any) => {
+        if(e.target.src)
+            setSelectedOptions({...selectedOptions, src: e.target.src})
     }
     
     return (
@@ -32,6 +38,8 @@ export const SelectItem: React.FC = () => {
                                 if(index != imageSelection.length-1)
                                     return (
                                         <Flex
+                                            border={selectedOptions.src === item.link ? '1px solid green' : undefined}
+                                            transform={selectedOptions.src === item.link ? 'scale(1.05)' : undefined}
                                             key={index}
                                             w='120px'
                                             h='120px'
@@ -39,6 +47,7 @@ export const SelectItem: React.FC = () => {
                                             _hover={{
                                                 transform: 'scale(1.05)'
                                             }}
+                                            onClick={e => handlePhotoSelect(e)}
                                         >
                                             <Image src={item.link} objectFit='cover' />
                                         </Flex>
@@ -46,8 +55,32 @@ export const SelectItem: React.FC = () => {
                             })}
                         </>
                     ) : (
-                            <>
-                            </>
+                        <>
+                            <FormControl>
+                                <FormLabel>Nome</FormLabel>
+                                <Input
+                                    placeholder='Nome do item'
+                                    value={selectedOptions.name}
+                                    onChange={(e: any) => setSelectedOptions({ ...selectedOptions, name: e.target.value })}
+                                />
+                            </FormControl>
+                            <FormControl>
+                                <FormLabel>Preço</FormLabel>
+                                <InputGroup>
+                                    <InputLeftElement
+                                        pointerEvents='none'
+                                        color='gray.500'
+                                        fontSize='1em'
+                                        children='R$'
+                                    />
+                                    <Input
+                                        value={formatCurrency(selectedOptions.price)}
+                                        onChange={(e: any) => setSelectedOptions({ ...selectedOptions, price: formatCurrency(e.target.value) })}
+                                        placeholder='Valor do item'
+                                    />
+                                </InputGroup>
+                            </FormControl>
+                        </>
                     )}
                 </Flex>
 
@@ -55,11 +88,13 @@ export const SelectItem: React.FC = () => {
                     <Button
                         colorScheme='blue'
                         mr={3}
+                        disabled={modalPage === 0 ? !selectedOptions.src ? true : false : selectedOptions.name && selectedOptions.price ? false : true}
                         onClick={() => {
                             if (modalPage === 0) {
                                 setModalPage(modalPage + 1)
                             } else if (modalPage === 1) {
-                                handleCreateItem()
+                                createItem()
+                                setOpenModal(false)
                             }
                         }}
                     >

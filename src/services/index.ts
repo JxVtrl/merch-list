@@ -1,2 +1,2 @@
 export { useGoogleSearch } from './useGoogleSearch'
-export { app } from './useFirebase'
+export { app, db } from './useFirebase'
