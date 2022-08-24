@@ -1,0 +1,1 @@
+export { getSearch } from './getSearch'
