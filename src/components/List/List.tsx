@@ -1,4 +1,4 @@
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Avatar, Flex, Text } from '@chakra-ui/react';
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Avatar, Flex, Text, ButtonGroup, Button } from '@chakra-ui/react';
 import React from 'react';
 import { useFirebase } from '../../context';
 
@@ -7,26 +7,22 @@ export const List: React.FC = () => {
     return (
         <Accordion allowToggle>
             {items.map((item: any) => (
-                <AccordionItem>
-                    <h2>
-                        <AccordionButton>
-                            <Flex align='center' justify='space-between' mr='15px' w='100%'>
-                                <Avatar mr='10px' src={item.src} />
-                                <Box flex='1' textAlign='left' textTransform='capitalize'>
-                                {item.name}
-                                </Box>
-                                <Text>
-                                    R$ {item.price}
-                                </Text>
-                            </Flex>
-                            <AccordionIcon />
-                        </AccordionButton>
-                    </h2>
-                    <AccordionPanel pb={4}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                    commodo consequat.
+                <AccordionItem maxW='400px' margin='0 auto'>
+                    <AccordionButton>
+                        <Flex align='center' justify='space-between' mr='15px' w='100%'>
+                            <Avatar mr='10px' src={item.src} />
+                            <Box flex='1' textAlign='left' textTransform='capitalize'>
+                            {item.name}
+                            </Box>
+                            <Text>
+                                R$ {item.price}
+                            </Text>
+                        </Flex>
+                        <AccordionIcon />
+                    </AccordionButton>
+                    <AccordionPanel pb={4} display='flex' w='100%' justifyContent='flex-end' gap='15px'>
+                        <Button transition='all 0.3s ease' _hover={{ backgroundColor: '#1da1f2', color: 'white' }}>Editar</Button>
+                        <Button transition='all 0.3s ease' _hover={{ backgroundColor: 'red', color: 'white' }} >Excluir</Button>
                     </AccordionPanel>
                 </AccordionItem>
             ))}

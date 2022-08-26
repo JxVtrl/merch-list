@@ -29,7 +29,7 @@ export function AppProvider({ children }: any) {
         setImageSelection,
         imageSelection,
         setOpenModal,
-        openModal
+        openModal,
     }
 
     return (

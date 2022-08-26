@@ -8,24 +8,22 @@ export const SelectItem: React.FC = () => {
     const { setSelectedOptions, selectedOptions, createItem }: any = useFirebase()
     const [modalPage, setModalPage] = useState<number>(0)
 
-    useEffect(() => {
-        if (openModal){
-            setModalPage(0)
-            setSelectedOptions({})
-        }
-    },[openModal])
-
-
     const handlePhotoSelect = (e: any) => {
         if(e.target.src)
             setSelectedOptions({...selectedOptions, src: e.target.src})
+    }
+
+    const handleReset = () => {
+        setOpenModal(false)
+        setSelectedOptions({})
+        setModalPage(0)
     }
     
     return (
         <Modal
             isOpen={openModal}
-            onOverlayClick={() => setOpenModal(false)}
-            onClose={() => setOpenModal(false)}
+            onOverlayClick={handleReset}
+            onClose={handleReset}
         >
             <ModalOverlay />
             <ModalContent>
@@ -60,7 +58,7 @@ export const SelectItem: React.FC = () => {
                                 <FormLabel>Nome</FormLabel>
                                 <Input
                                     placeholder='Nome do item'
-                                    value={selectedOptions.name}
+                                    value={selectedOptions?.name}
                                     onChange={(e: any) => setSelectedOptions({ ...selectedOptions, name: e.target.value })}
                                 />
                             </FormControl>

@@ -1,25 +1,25 @@
 import React, { useState } from 'react';
 import { Button, Flex, Input } from '@chakra-ui/react';
 import { useGoogleSearch } from '../../services';
-import { useApp } from '../../context';
+import { useApp, useFirebase } from '../../context';
 
 export const Search: React.FC = () => {
-    const { setImageSelection, setOpenModal }: any = useApp()
-    const [search, setSearch] = useState<string>('')
+    const { setImageSelection, setOpenModal  }: any = useApp()
+    const { setSelectedOptions, selectedOptions }: any = useFirebase()
   
     const handleSearch = async () => {
-        if (search) {
+        if (selectedOptions?.name) {
             setOpenModal(true)
-            setImageSelection(await useGoogleSearch(search))
+            setImageSelection(await useGoogleSearch(selectedOptions.name))
         }
     }
 
     return (
-        <Flex w='500px' margin='15px auto'>
+        <Flex margin='15px auto'>
             <Input
                 placeholder='Search'
-                onChange={(e: any) => setSearch(e.target.value)}
-                value={search}
+                onChange={(e: any) => setSelectedOptions({...selectedOptions, name: e.target.value})}
+                value={selectedOptions?.name}
             />
             <Button onClick={handleSearch}>Search</Button>
         </Flex>
