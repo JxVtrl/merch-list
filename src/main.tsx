@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { ChakraProvider } from '@chakra-ui/react'
-import { AppRoutes } from './routes'
+import { Home } from './pages'
 import { AppProvider, FirebaseProvider } from './context'
 import './styles/global.css'
 
@@ -10,7 +10,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <ChakraProvider>
       <FirebaseProvider>
         <AppProvider>
-          <AppRoutes />
+          <Home />
         </AppProvider>
       </FirebaseProvider>
     </ChakraProvider>

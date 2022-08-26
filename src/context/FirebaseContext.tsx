@@ -11,17 +11,25 @@ interface iSelected {
     name?: string
 }
 
+interface iItem {
+    name: string
+    src: string
+    price: string
+}[]
+
 interface iValue {
     selectedOptions: object
     setSelectedOptions: React.Dispatch<SetStateAction<iSelected>>
     createItem: () => void
-    items: object[]
+    items: iItem[]
+    totalPrice: number
 
 }
 
 export function FirebaseProvider({ children }: any) {
     const [selectedOptions, setSelectedOptions] = useState<iSelected>({})
-    const [items, setItems] = useState<object[]>([])
+    const [items, setItems] = useState<iItem[]>([])
+    const [totalPrice, setTotalPrice] = useState<number>(0)
     const itemsCollectionRef = collection(db, 'items')
 
     useEffect(() => {
@@ -30,12 +38,19 @@ export function FirebaseProvider({ children }: any) {
     
     useEffect(() => {
         console.log(items)
+        if (items) {
+            let total = 0
+            items.map((item) => {
+                total += Number(item?.price)
+            })
+            setTotalPrice(total)
+        }
     },[items])
 
     const getItems = () => {
         const getData = async () => {
             const data = await getDocs(itemsCollectionRef)
-            setItems(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+            setItems(data.docs.map(doc => ({ ...doc.data(), id: doc.id })) as any)
         }
         
         getData()
@@ -56,7 +71,8 @@ export function FirebaseProvider({ children }: any) {
         selectedOptions,
         setSelectedOptions,
         createItem,
-        items
+        items,
+        totalPrice
 
     }
 

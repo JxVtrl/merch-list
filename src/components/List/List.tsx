@@ -6,8 +6,8 @@ export const List: React.FC = () => {
     const { items }: any = useFirebase()
     return (
         <Accordion allowToggle>
-            {items.map((item: any) => (
-                <AccordionItem maxW='400px' margin='0 auto'>
+            {items.map((item: any, idx: number) => (
+                <AccordionItem maxW='400px' margin='0 auto' key={idx}>
                     <AccordionButton>
                         <Flex align='center' justify='space-between' mr='15px' w='100%'>
                             <Avatar mr='10px' src={item.src} />
