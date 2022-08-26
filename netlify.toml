@@ -3,4 +3,4 @@ publish = "public"
 
 [[redirects]]
 from = "/"
-to = "/home"
+to = "home"
