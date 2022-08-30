@@ -4,7 +4,7 @@ import { doc, collection, getDocs, addDoc, deleteDoc, updateDoc, setDoc } from '
 
 const FirebaseContext = createContext({})
 
-interface iSelected {
+export interface iSelected {
     id?: number
     src?: string
     price?: string
@@ -23,6 +23,7 @@ interface iValue {
     createItem: () => void
     items: iItem[]
     totalPrice: number
+    removeItem: (id: string) => void
 
 }
 
@@ -54,6 +55,10 @@ export function FirebaseProvider({ children }: any) {
         
         getData()
     }
+
+    const removeItem = (id: string) => {
+        console.log(id) 
+    }
     
     const createItem = () => {
         const sendData = async () => {
@@ -70,6 +75,7 @@ export function FirebaseProvider({ children }: any) {
         selectedOptions,
         setSelectedOptions,
         createItem,
+        removeItem,
         items,
         totalPrice
 
