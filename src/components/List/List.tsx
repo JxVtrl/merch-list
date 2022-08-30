@@ -8,32 +8,23 @@ import {
     Avatar,
     Flex,
     Text,
-    ButtonGroup,
     Button,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useApp } from '../../context';
 import { iSelected } from '../../context/AppContext'
+import { Exclude } from '../Exclude';
 
 export const List: React.FC = () => {
     const [confirmModal, setConfirmModal] = useState<boolean>(false)
     const [confirmItem, setConfirmItem] = useState<iSelected>({})
 
-    const { items, removeItem }: any = useApp()
-
+    const { items }: any = useApp()
 
     const handleExclude = (item: any) => {
         setConfirmItem(item)
         setConfirmModal(true)
     }
-
 
     return (
         <Accordion allowToggle position='relative'>
@@ -89,45 +80,12 @@ export const List: React.FC = () => {
                     </AccordionPanel>
                 </AccordionItem>
             ))}
-            <Modal
-                isOpen={confirmModal}
-                onOverlayClick={() => {
-                    setConfirmItem({})
-                    setConfirmModal(false)
-                }}
-                onClose={() => {
-                    setConfirmItem({})
-                    setConfirmModal(false)
-                }}
-            >
-                <ModalOverlay />
-                <ModalContent>
-                    <ModalHeader>Excluir item {confirmItem.id}</ModalHeader>
-                <ModalCloseButton />
-                <ModalBody>
-                    Você está prestes a excluir o item: {confirmItem.name}
-                </ModalBody>
-
-                <ModalFooter>
-                    <Button
-                        colorScheme='blue'
-                        mr={3}
-                        onClick={() => {
-                            setConfirmItem({})
-                            setConfirmModal(false)
-                        }}
-                    >
-                        Cancelar
-                    </Button>
-                    <Button
-                        variant='ghost'
-                        onClick={() => removeItem(confirmItem.id)}
-                    >
-                        Confirmar
-                    </Button>
-                </ModalFooter>
-                </ModalContent>
-            </Modal>
+            <Exclude
+                confirmModal={confirmModal}
+                setConfirmModal={setConfirmModal}
+                confirmItem={confirmItem}
+                setConfirmItem={setConfirmItem}
+            />
         </Accordion>
     );
 }
