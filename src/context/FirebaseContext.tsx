@@ -37,15 +37,14 @@ export function FirebaseProvider({ children }: any) {
     }, [])
     
     useEffect(() => {
-        console.log(items)
         if (items) {
             let total = 0
             items.map((item) => {
-                total += Number(item?.price)
+                total += Number(item?.price.replace(',', '.'))
             })
             setTotalPrice(total)
         }
-    },[items])
+    }, [items])
 
     const getItems = () => {
         const getData = async () => {

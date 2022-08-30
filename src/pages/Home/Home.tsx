@@ -4,10 +4,10 @@ import { List, Search, SelectItem, Total } from '../../components';
 
 export const Home: React.FC = () => {
   return (
-    <Flex pos='relative' flexDir='column'>
+    <Flex pos='relative' flexDir='column' h='100vh'>
       <Search />
-      <List />
       <Total />
+      <List />
       <SelectItem />
     </Flex>
   );
