@@ -19,14 +19,14 @@ import {
     ModalCloseButton,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import { useFirebase } from '../../context';
-import { iSelected } from '../../context/FirebaseContext'
+import { useApp } from '../../context';
+import { iSelected } from '../../context/AppContext'
 
 export const List: React.FC = () => {
     const [confirmModal, setConfirmModal] = useState<boolean>(false)
     const [confirmItem, setConfirmItem] = useState<iSelected>({})
 
-    const { items, removeItem }: any = useFirebase()
+    const { items, removeItem }: any = useApp()
 
 
     const handleExclude = (item: any) => {

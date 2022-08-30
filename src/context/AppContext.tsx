@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useEffect, useState, useRef, SetStateAction } from 'react'
-import { db } from '../services'
+import { db, useGoogleSearch } from '../services'
 import { doc, collection, getDocs, addDoc, deleteDoc, updateDoc, setDoc } from 'firebase/firestore'
 
-const FirebaseContext = createContext({})
+const AppContext = createContext({})
 
 export interface iSelected {
     id?: number
@@ -24,10 +24,17 @@ interface iValue {
     items: iItem[]
     totalPrice: number
     removeItem: (id: string) => void
+    handleSearch: () => void
+    setImageSelection: React.Dispatch<SetStateAction<object[]>>
+    imageSelection: object[]
+    openModal: boolean
+    setOpenModal: React.Dispatch<SetStateAction<boolean>>
 
 }
 
-export function FirebaseProvider({ children }: any) {
+export function AppProvider({ children }: any) {
+    const [imageSelection, setImageSelection] = useState<object[]>([])
+    const [openModal, setOpenModal] = useState<boolean>(false)
     const [selectedOptions, setSelectedOptions] = useState<iSelected>({})
     const [items, setItems] = useState<iItem[]>([])
     const [totalPrice, setTotalPrice] = useState<number>(0)
@@ -69,6 +76,27 @@ export function FirebaseProvider({ children }: any) {
         getItems()
     }
 
+    useEffect(() => {
+        if (imageSelection?.length > 0){
+            setOpenModal(true)
+        }
+    }, [imageSelection])
+    
+    useEffect(() => {
+        if (!openModal){
+            setImageSelection([])
+        }
+    },[openModal])
+
+
+    const handleSearch = async () => {
+        if (selectedOptions?.name) {
+            setOpenModal(true)
+            setImageSelection(await useGoogleSearch(selectedOptions.name))
+        }
+    }
+
+
 
 
     const value: iValue = {
@@ -77,17 +105,21 @@ export function FirebaseProvider({ children }: any) {
         createItem,
         removeItem,
         items,
-        totalPrice
-
+        totalPrice,
+        handleSearch,
+        setImageSelection,
+        imageSelection,
+        setOpenModal,
+        openModal,
     }
 
     return (
-        <FirebaseContext.Provider value={value}>
+        <AppContext.Provider value={value}>
             {children}
-        </FirebaseContext.Provider>
+        </AppContext.Provider>
     )
 }
 
-export function useFirebase() {
-    return useContext(FirebaseContext)
+export function useApp() {
+    return useContext(AppContext)
 }

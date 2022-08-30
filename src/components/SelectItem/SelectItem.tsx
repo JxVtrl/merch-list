@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Image, FormControl, FormLabel, Input, InputGroup, InputLeftElement } from '@chakra-ui/react';
-import { useApp, useFirebase } from '../../context';
+import { useApp } from '../../context';
 import { formatCurrency } from '../../helpers';
 
 export const SelectItem: React.FC = () => {
-    const { openModal, setOpenModal, imageSelection }: any = useApp()
-    const { setSelectedOptions, selectedOptions, createItem }: any = useFirebase()
+    const { setSelectedOptions, selectedOptions, createItem, openModal, setOpenModal, imageSelection }: any = useApp()
     const [modalPage, setModalPage] = useState<number>(0)
 
     const handlePhotoSelect = (e: any) => {
