@@ -26,7 +26,7 @@ export const SelectItem: React.FC = () => {
             onClose={handleReset}
         >
             <ModalOverlay />
-            <ModalContent h='550px'>
+            <ModalContent h={modalPage === 0 ? '550px' : undefined}>
                 {load ? (<Load />): (
                     <>
                         <ModalHeader>{modalPage === 0 ? 'Selecione a imagem' : 'Informações do item'}</ModalHeader>
@@ -35,7 +35,7 @@ export const SelectItem: React.FC = () => {
                             {modalPage === 0 ? (
                                 <>
                                     {imageSelection?.map((item: any, index: number) => {
-                                        if(index != imageSelection.length-1)
+                                        if(index < 9)
                                             return (
                                                 <Flex
                                                     border={selectedOptions.src === item.link ? '1px solid green' : undefined}
