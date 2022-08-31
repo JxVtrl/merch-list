@@ -58,13 +58,7 @@ export const List: React.FC = () => {
                         justify='flex-end'
                         gap='15px'
                     >
-                        <Button
-                            transition='all 0.3s ease'
-                            _hover={{
-                                backgroundColor: '#1da1f2',
-                                color: 'white'
-                            }}
-                        >
+                        <Button transition='all 0.3s ease'>
                             Editar
                         </Button>
                         <Button
