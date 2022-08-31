@@ -3,10 +3,13 @@ import { Button, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFo
 import { Load } from '../'
 import { useApp } from '../../context';
 import { formatCurrency } from '../../helpers';
+import { useDevice } from '../../hooks';
 
 export const SelectItem: React.FC = () => {
     const { setSelectedOptions, selectedOptions, createItem, openModal, setOpenModal, imageSelection, load }: any = useApp()
     const [modalPage, setModalPage] = useState<number>(0)
+    const { device: { isMobile }} = useDevice()
+
 
     const handlePhotoSelect = (e: any) => {
         if(e.target.src)
@@ -35,7 +38,7 @@ export const SelectItem: React.FC = () => {
                             {modalPage === 0 ? (
                                 <>
                                     {imageSelection?.map((item: any, index: number) => {
-                                        if(index < 9)
+                                        if(index < 9 || isMobile)
                                             return (
                                                 <Flex
                                                     border={selectedOptions.src === item.link ? '1px solid green' : undefined}
