@@ -26,7 +26,7 @@ export const SelectItem: React.FC = () => {
             onClose={handleReset}
         >
             <ModalOverlay />
-            <ModalContent h={modalPage === 0 ? '550px' : undefined}>
+            <ModalContent h={load ? '550px' : undefined}>
                 {load ? (<Load />): (
                     <>
                         <ModalHeader>{modalPage === 0 ? 'Selecione a imagem' : 'Informações do item'}</ModalHeader>
