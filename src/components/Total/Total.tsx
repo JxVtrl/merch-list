@@ -7,7 +7,7 @@ export const Total: React.FC = () => {
   const { totalPrice }: any = useApp()
   return (
     <Flex w='100%' align='center' justify='center' flexDir='column' mb='15px'>
-      {totalPrice && (
+      {totalPrice > 0 && (
         <Text textAlign='center'>
           Total
           <br />
