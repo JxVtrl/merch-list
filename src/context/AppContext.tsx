@@ -10,13 +10,11 @@ export interface iSelected {
     price?: string
     name?: string
 }
-
 interface iItem {
     name: string
     src: string
     price: string
 }[]
-
 interface iValue {
     selectedOptions: object
     setSelectedOptions: React.Dispatch<SetStateAction<iSelected>>
@@ -29,10 +27,11 @@ interface iValue {
     imageSelection: object[]
     openModal: boolean
     setOpenModal: React.Dispatch<SetStateAction<boolean>>
-
+    load: boolean
 }
 
 export function AppProvider({ children }: any) {
+    const [load, setLoad] = useState<boolean>(false)
     const [imageSelection, setImageSelection] = useState<object[]>([])
     const [openModal, setOpenModal] = useState<boolean>(false)
     const [selectedOptions, setSelectedOptions] = useState<iSelected>({})
@@ -92,12 +91,11 @@ export function AppProvider({ children }: any) {
     const handleSearch = async () => {
         if (selectedOptions?.name) {
             setOpenModal(true)
+            setLoad(true)
             setImageSelection(await useGoogleSearch(selectedOptions.name))
+            setLoad(false)
         }
     }
-
-
-
 
     const value: iValue = {
         selectedOptions,
@@ -111,6 +109,7 @@ export function AppProvider({ children }: any) {
         imageSelection,
         setOpenModal,
         openModal,
+        load,
     }
 
     return (
